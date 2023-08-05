@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">EzSplit</string>
+    <string name="tx_members">Members</string>
+    <string name="tx_sign_out">Sign Out</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="tx_new_expense">New Expense</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!--  Strings used for new expense screen  -->
+    <string name="tx_purpose">Purpose</string>
+    <string name="tx_who_paid">Who Paid</string>
+    <string name="tx_how_much">How Much</string>
+    <string name="tx_for_whom">For Whom</string>
+    <string name="tx_break_down_selection">Break Down Selection</string>
+    <string name="tx_date">Date</string>
+
+    <string-array name="break_down_methods">
+        <item>Please select</item>
+        <item>Split Equally</item>
+        <item>Split By Ratio</item>
+        <item>Split By Amount</item>
+    </string-array>
+
+    <!--  Strings used for members screen  -->
+    <string name="tx_new_member">New Member</string>
+
+    <string name="tx_total_amount">Total Amount:</string>
+</resources>
