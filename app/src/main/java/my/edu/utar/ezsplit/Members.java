@@ -5,9 +5,12 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,12 +53,11 @@ public class Members extends AppCompatActivity {
                 editMemberName.setVisibility(View.VISIBLE);
                 editMemberName.requestFocus();
 
-                editMemberName.setOnKeyListener(new View.OnKeyListener() {
+                editMemberName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        // If the event is a key-down event on the "enter" button
-                        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        // Check if the "Done" or "Enter" key was pressed
+                        if (actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                             mySQLiteAdapter.openToWrite();
 
                             String inputText = editMemberName.getText().toString().trim();
@@ -65,6 +67,10 @@ public class Members extends AppCompatActivity {
                                 long insertedRowId = mySQLiteAdapter.insertMember(inputText);
 
                                 if (insertedRowId != -1) {
+                                    // Hide the keyboard
+                                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                                     // Replace back EditText with TextView
                                     txNewMember.setVisibility(View.VISIBLE);
                                     editMemberName.setVisibility(View.GONE);
