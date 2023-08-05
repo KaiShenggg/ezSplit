@@ -53,6 +53,10 @@ public class Members extends AppCompatActivity {
                 editMemberName.setVisibility(View.VISIBLE);
                 editMemberName.requestFocus();
 
+                // Open the soft keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(editMemberName, InputMethodManager.SHOW_IMPLICIT);
+
                 editMemberName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -68,7 +72,6 @@ public class Members extends AppCompatActivity {
 
                                 if (insertedRowId != -1) {
                                     // Hide the keyboard
-                                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                                     // Replace back EditText with TextView

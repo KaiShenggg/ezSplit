@@ -92,37 +92,45 @@
         android:layout_marginTop="45dp"
         android:layout_marginLeft="80dp" >
 
-    <TextView
-        android:id="@+id/tvPayer6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Payer"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/tvPayer6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payer"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/tvPaidFor6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" paid for "
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvPayer6" />
+        <TextView
+            android:id="@+id/tvPaidFor6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" paid for "
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPayer6" />
 
-    <TextView
-        android:id="@+id/tvOwer6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/tvOwer6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivShare6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_share"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

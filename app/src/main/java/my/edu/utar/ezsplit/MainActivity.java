@@ -12,12 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -88,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tvNoExpense.setVisibility(View.GONE);
 
-            adapter = new DataRecyclerViewAdapter(expenseList, 6); // Pass the data to the adapter
+            adapter = new DataRecyclerViewAdapter(MainActivity.this, expenseList); // Pass the data to the adapter
             rvExpense.setAdapter(adapter);
         }
 
@@ -103,10 +101,4 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
             listExpense();
     }
-
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        return navController.navigateUp() || super.onSupportNavigateUp();
-//    }
 }

@@ -2,6 +2,8 @@ package my.edu.utar.ezsplit;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -24,6 +27,7 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     public static List<Expense> expenseDataList;
     private int layoutType;
     private double totalAmount;
+    private static Context context;
 
     // layoutType 1: Members
     // layoutType 2: New Expense (For Whom)
@@ -40,9 +44,6 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             case 2:
                 this.owerDataList = (List<Ower>) dataList;
                 break;
-            case 6:
-                this.expenseDataList = (List<Expense>) dataList;
-                break;
             default:
                 this.dataList = (List<Ower>) dataList;
         }
@@ -54,25 +55,18 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         this.totalAmount = totalAmount;
     }
 
-//    public DataRecyclerViewAdapter(List<Ower> dataList, int layoutType) {
-//        this.dataList = dataList;
-//        this.layoutType = layoutType;
-//    }
-//    public DataRecyclerViewAdapter(List<Ower> dataList) {
-//        this.owerDataList = (List<Ower>) dataList;
-//        this.layoutType = 2;
-//    }
-//
-//    public DataRecyclerViewAdapter(List<Expense> dataList, char c) {
-//        this.expenseDataList = (List<Expense>) dataList;
-//        this.layoutType = 6;
-//    }
+    public DataRecyclerViewAdapter(Context context, List<Expense> dataList) {
+        this.context = context;
+        this.expenseDataList = dataList;
+        this.layoutType = 6;
+    }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         RecyclerView.ViewHolder viewHolder;
+        context = parent.getContext();
 
         // Inflate the item layout for each item
         switch (layoutType) {
@@ -98,8 +92,7 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
             case 6:
                 View viewLayout6 = inflater.inflate(R.layout.item_cardview6, parent, false);
-                viewHolder = new ViewHolderLayout6(viewLayout6);
-                break;
+                return new ViewHolderLayout6(viewLayout6, 0); // Pass 0 as a placeholder for the position
             default:
                 throw new IllegalArgumentException("Invalid view type");
         }
@@ -163,6 +156,7 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 viewHolderLayout6.tvDate.setText(expenseData.getDate());
                 viewHolderLayout6.tvPayer.setText(expenseData.getPayer());
                 int size = expenseData.getOwer().size();
+
                 for (int i = 0; i < size; i++) {
                     viewHolderLayout6.tvOwer.setText(viewHolderLayout6.tvOwer.getText() + expenseData.getOwer().get(i) + " (RM " + expenseData.getAmountOwed().get(i) + ")");
 
@@ -384,8 +378,9 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     static class ViewHolderLayout6 extends RecyclerView.ViewHolder {
         TextView tvFirstLetterOfPayer, tvPurpose, tvTotalAmount, tvDate, tvPayer, tvOwer;
+        CardView cvExpense = itemView.findViewById(R.id.cvOwe6);
 
-        ViewHolderLayout6(@NonNull View itemView) {
+        ViewHolderLayout6(@NonNull View itemView, int position) {
             super(itemView);
             tvFirstLetterOfPayer = itemView.findViewById(R.id.tvFirstLetterOfPayer6);
             tvPurpose = itemView.findViewById(R.id.tvPurpose6);
@@ -393,6 +388,34 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             tvDate = itemView.findViewById(R.id.tvDate6);
             tvPayer = itemView.findViewById(R.id.tvPayer6);
             tvOwer = itemView.findViewById(R.id.tvOwer6);
+
+            cvExpense.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition(); // Get the position of the clicked item in the RecyclerView
+
+                    // Ensure the position is valid
+                    if (position != RecyclerView.NO_POSITION) {
+                        // Create a new Intent with ACTION_SEND and set the data to the WhatsApp package
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setPackage("com.whatsapp");
+
+                        // Set the type of content you want to share
+                        intent.setType("text/plain");
+
+                        // Add the content to the Intent
+                        String contentToShare = tvPurpose.getText() + "\n" + tvDate.getText() + "\n" + tvPayer.getText() + " paid " + tvTotalAmount.getText() + " for\n" + tvOwer.getText();
+                        intent.putExtra(Intent.EXTRA_TEXT, contentToShare);
+
+                        // Check if WhatsApp is installed on the device
+                        try {
+                            itemView.getContext().startActivity(intent);
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(itemView.getContext(), "WhatsApp is not installed on your device", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
         }
     }
 }
