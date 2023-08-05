@@ -131,6 +131,14 @@ public class SQLiteAdapter {
         return result;
     }
 
+    // Get the length of Member table
+    public int getMemberLength() {
+        String[] columns = new String[] {MEMBER_KEY_CONTENT};
+        Cursor cursor = sqLiteDatabase.query(DATABASE_MEMBER_TABLE, columns, null, null, null, null, null);
+
+        return cursor.getCount();
+    }
+
     // Delete a content in the table
     public int deleteOne(int id) {
         return sqLiteDatabase.delete(DATABASE_MEMBER_TABLE, MEMBER_KEY_CONTENT + "=?", new String[] {String.valueOf(id)});

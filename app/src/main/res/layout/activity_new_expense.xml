@@ -55,6 +55,7 @@
                     android:ems="10"
                     android:hint="e.g. Dinner"
                     android:inputType="textAutoCorrect"
+                    android:maxLength="50"
                     android:minHeight="48dp" />
 
             </androidx.cardview.widget.CardView>
