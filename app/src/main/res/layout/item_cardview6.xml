@@ -80,7 +80,7 @@
         android:id="@+id/tvDate6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="26dp"
         android:layout_marginLeft="80dp"
         android:text="Date"
         android:textColor="@color/black"
@@ -89,7 +89,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="45dp"
         android:layout_marginLeft="80dp" >
 
     <TextView
@@ -97,7 +97,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Payer"
-        android:layout_gravity=""
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -118,7 +117,7 @@
         android:id="@+id/tvOwer6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="19dp"
         android:text=""
         android:textColor="@color/black"
         android:textSize="14sp"

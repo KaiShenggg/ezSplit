@@ -38,15 +38,6 @@
                     android:textSize="16sp"
                     android:textStyle="normal" />
 
-                <!--        <ImageView-->
-                <!--            android:id="@+id/img"-->
-                <!--            android:layout_width="200dp"-->
-                <!--            android:layout_height="200dp"-->
-                <!--            android:layout_gravity="center"-->
-                <!--            android:layout_margin="10dp"-->
-                <!--            android:contentDescription="@string/app_name"-->
-                <!--            android:src="@mipmap/ic_launcher" />-->
-
                 <EditText
                     android:id="@+id/editPurpose"
                     android:layout_width="match_parent"
@@ -82,15 +73,47 @@
                     android:textSize="16sp"
                     android:textStyle="normal" />
 
-                <EditText
-                    android:id="@+id/editPayer"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:ems="10"
-                    android:hint="e.g. Ali"
-                    android:inputType="text"
-                    android:minHeight="48dp" />
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp">
+
+                    <ImageView
+                        android:id="@+id/ivCircle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/circle_bg"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintVertical_bias="0.5"
+                        app:layout_constraintHorizontal_bias="0.5" />
+
+                    <TextView
+                        android:id="@+id/tvFirstLetterOfPayerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="A"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:layout_constraintTop_toTopOf="@id/ivCircle"
+                        app:layout_constraintStart_toStartOf="@id/ivCircle"
+                        app:layout_constraintEnd_toEndOf="@id/ivCircle"
+                        app:layout_constraintBottom_toBottomOf="@id/ivCircle"
+                        android:gravity="center"
+                        android:layout_gravity="center" />
+
+                    <Spinner
+                        android:id="@+id/spinnerPayer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="60dp"
+                        android:minHeight="48dp"
+                        android:spinnerMode="dropdown"
+                        android:text="Payer"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
 
@@ -151,11 +174,11 @@
                     android:textStyle="normal" />
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/spinnerBreakDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:background="@android:drawable/btn_dropdown"
+                    android:minHeight="48dp"
                     android:spinnerMode="dropdown"
                     android:text="Choose Break Down Method" />
 
@@ -234,7 +257,6 @@
                     android:layout_height="25dp"
                     android:layout_marginTop="28dp"
                     android:layout_gravity="right"
-                    android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_calander" />
 
             </androidx.cardview.widget.CardView>

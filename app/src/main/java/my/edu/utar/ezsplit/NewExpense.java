@@ -29,10 +29,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class NewExpense extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class NewExpense extends AppCompatActivity {
 
     private EditText editPurpose;
-    private EditText editPayer;
+    private TextView tvFirstLetterOfPayerName;
+    private String strPayer;
 
     private int breakDownMethod = 0;
 
@@ -75,7 +76,8 @@ public class NewExpense extends AppCompatActivity implements AdapterView.OnItemS
 
 
         editPurpose = findViewById(R.id.editPurpose);
-        editPayer = findViewById(R.id.editPayer);
+        tvFirstLetterOfPayerName = findViewById(R.id.tvFirstLetterOfPayerName);
+        tvFirstLetterOfPayerName.setText(String.valueOf(Character.toUpperCase(memberNameList.get(0).getFirstLetterOfName())));
 
 
         // To hide the keyboard after user enters the total amount
@@ -94,6 +96,7 @@ public class NewExpense extends AppCompatActivity implements AdapterView.OnItemS
                 return false;
             }
         });
+
 
         cvPickDate = findViewById(R.id.cvDate);
         tvSelectedDate = findViewById(R.id.txSelectedDate);
@@ -137,21 +140,75 @@ public class NewExpense extends AppCompatActivity implements AdapterView.OnItemS
         });
 
 
-        Spinner dropdown = findViewById(R.id.spinner);
-        dropdown.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        // Spinner for payers
+        Spinner dropdownPayer = findViewById(R.id.spinnerPayer);
+
+        // Create a list of items for the spinner
+        int size = memberNameList.size();
+        ArrayList<String> memberNames = new ArrayList<>();
+
+        for (int i = 0; i < size; i++)
+            memberNames.add(memberNameList.get(i).getName());
+
+        ArrayAdapter<String> adapterMember = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, memberNames);
+        dropdownPayer.setAdapter(adapterMember);
+
+        tvFirstLetterOfPayerName = findViewById(R.id.tvFirstLetterOfPayerName);
+
+        dropdownPayer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position,long id) {
+                strPayer = adapterView.getItemAtPosition(position).toString();
+                tvFirstLetterOfPayerName.setText(String.valueOf(Character.toUpperCase(strPayer.charAt(0))));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {}
+        });
+
+
+        // Spinner for break down methods
+        Spinner dropdownBreakDown = findViewById(R.id.spinnerBreakDown);
 
         // Create a list of items for the spinner
         String[] breakDownMethods = getResources().getStringArray(R.array.break_down_methods);
 
         // Create a custom ArrayAdapter to disable the default item
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, breakDownMethods) {
+        ArrayAdapter<String> adapterBreakDown = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, breakDownMethods) {
             @Override
             public boolean isEnabled(int position) {
                 return position != 0; // Disable the first item (default value)
             }
         };
 
-        dropdown.setAdapter(adapter);
+        dropdownBreakDown.setAdapter(adapterBreakDown);
+
+        dropdownBreakDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position,long id) {
+                strTotalAmount = editTotalAmount.getText().toString().trim();
+
+                if (strTotalAmount == null || strTotalAmount.isEmpty())
+                    totalAmount = 0;
+                else
+                    totalAmount = Double.parseDouble(strTotalAmount);
+
+                switch (position) {
+                    case 1:
+                    case 2:
+                    case 3:
+                        breakDownMethod = position;
+                        intent = new Intent(NewExpense.this, Split.class);
+                        intent.putExtra("TOTAL_AMOUNT", totalAmount);
+                        intent.putExtra("LAYOUT_TYPE", position + 2);
+                        startActivityForResult(intent, REQUEST_CODE); // Use startActivityForResult
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {}
+        });
     }
 
     @Override
@@ -165,11 +222,10 @@ public class NewExpense extends AppCompatActivity implements AdapterView.OnItemS
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_check) {
             String strPurpose = editPurpose.getText().toString().trim();
-            String strPayer = editPayer.getText().toString().trim();
             strTotalAmount = editTotalAmount.getText().toString().trim();
 
             // Check if any fill is empty
-            if (strPurpose.isEmpty() || strPayer.isEmpty() || strTotalAmount.isEmpty()) {
+            if (strPurpose.isEmpty() || strTotalAmount.isEmpty()) {
                 Toast.makeText(this, "Please fill in all!", Toast.LENGTH_SHORT).show();
                 return false;
             } else if (breakDownMethod == 0) {
@@ -224,35 +280,6 @@ public class NewExpense extends AppCompatActivity implements AdapterView.OnItemS
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    // Performing action onItemSelected and onNothing selected
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position,long id) {
-        strTotalAmount = editTotalAmount.getText().toString().trim();
-
-        if (strTotalAmount == null || strTotalAmount.isEmpty())
-            totalAmount = 0;
-        else
-            totalAmount = Double.parseDouble(strTotalAmount);
-
-        switch (position) {
-            case 1:
-            case 2:
-            case 3:
-                breakDownMethod = position;
-                intent = new Intent(NewExpense.this, Split.class);
-                intent.putExtra("TOTAL_AMOUNT", totalAmount);
-                intent.putExtra("LAYOUT_TYPE", position + 2);
-                startActivityForResult(intent, REQUEST_CODE); // Use startActivityForResult
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
-
     }
 
     // To receive updated data from Split activity
