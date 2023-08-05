@@ -177,6 +177,9 @@ public class NewExpense extends AppCompatActivity implements AdapterView.OnItemS
                 return false;
             }
 
+            double totalAmountOwed = 0;
+            totalAmount = Double.parseDouble(strTotalAmount);
+
             String owerName = "";
             String amountOwed = "";
             int owerDataListSize = DataRecyclerViewAdapter.owerDataList.size();
@@ -184,6 +187,7 @@ public class NewExpense extends AppCompatActivity implements AdapterView.OnItemS
             for (int i = 0; i < owerDataListSize; i++) {
                 Ower ower = DataRecyclerViewAdapter.owerDataList.get(i);
 
+                totalAmountOwed += ower.getAmount();
                 owerName += ower.getName();
                 amountOwed += MainActivity.decimalFormat.format(ower.getAmount());
 
@@ -191,6 +195,15 @@ public class NewExpense extends AppCompatActivity implements AdapterView.OnItemS
                     owerName += ",";
                     amountOwed += ",";
                 }
+            }
+
+            // Check if the split amount is the same as the total amount
+            if (totalAmountOwed < totalAmount) {
+                Toast.makeText(this, "The split amount is less than the total amount!", Toast.LENGTH_SHORT).show();
+                return false;
+            } else if (totalAmountOwed > totalAmount) {
+                Toast.makeText(this, "The split amount is greater than the total amount!", Toast.LENGTH_SHORT).show();
+                return false;
             }
 
             mySQLiteAdapter = new SQLiteAdapter(this);

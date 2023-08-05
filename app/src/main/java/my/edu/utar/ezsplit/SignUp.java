@@ -48,7 +48,7 @@ public class SignUp extends AppCompatActivity {
                         Toast.makeText(SignUp.this, "Failed to add you", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(SignUp.this, "Please fill in your name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUp.this, "Please fill in your name!", Toast.LENGTH_SHORT).show();
                 }
 
             }
