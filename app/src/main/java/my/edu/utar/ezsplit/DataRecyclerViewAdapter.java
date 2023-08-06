@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,15 +38,15 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     // layoutType 6: Main
 
     // Constructors
-    public DataRecyclerViewAdapter(List<?> dataList, int layoutType) {
+    public DataRecyclerViewAdapter(List<Ower> dataList, int layoutType) {
         this.layoutType = layoutType;
 
         switch (layoutType) {
             case 2:
-                this.owerDataList = (List<Ower>) dataList;
+                this.owerDataList = dataList;
                 break;
             default:
-                this.dataList = (List<Ower>) dataList;
+                this.dataList = dataList;
         }
     }
 
@@ -276,7 +277,6 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 public void onClick(View v) {
                     int position = getAdapterPosition();
 
-                    // Ensure the position is valid
                     if (position != RecyclerView.NO_POSITION) {
                         editRatio.requestFocus();
                     }
@@ -295,8 +295,7 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 @Override
                 public void afterTextChanged(Editable editable) {
                     int position = getAdapterPosition();
-                    Log.d(TAG, "xxx: " + position);
-                    // Ensure the position is valid
+
                     if (position != RecyclerView.NO_POSITION) {
                         Ower data = dataList.get(position);
 
@@ -378,7 +377,7 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     static class ViewHolderLayout6 extends RecyclerView.ViewHolder {
         TextView tvFirstLetterOfPayer, tvPurpose, tvTotalAmount, tvDate, tvPayer, tvOwer;
-        CardView cvExpense = itemView.findViewById(R.id.cvOwe6);
+        Button btnShare;
 
         ViewHolderLayout6(@NonNull View itemView, int position) {
             super(itemView);
@@ -388,13 +387,13 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             tvDate = itemView.findViewById(R.id.tvDate6);
             tvPayer = itemView.findViewById(R.id.tvPayer6);
             tvOwer = itemView.findViewById(R.id.tvOwer6);
+            btnShare = itemView.findViewById(R.id.btnShare6);
 
-            cvExpense.setOnClickListener(new View.OnClickListener() {
+            btnShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition(); // Get the position of the clicked item in the RecyclerView
+                    int position = getAdapterPosition();
 
-                    // Ensure the position is valid
                     if (position != RecyclerView.NO_POSITION) {
                         // Create a new Intent with ACTION_SEND and set the data to the WhatsApp package
                         Intent intent = new Intent(Intent.ACTION_SEND);

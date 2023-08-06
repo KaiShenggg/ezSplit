@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No Expenses\nAdd it now"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:gravity="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,6 +35,7 @@
         android:src="@drawable/ic_add"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/tx_new_expense" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

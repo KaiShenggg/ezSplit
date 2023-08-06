@@ -188,10 +188,21 @@ public class NewExpense extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position,long id) {
                 strTotalAmount = editTotalAmount.getText().toString().trim();
 
-                if (strTotalAmount == null || strTotalAmount.isEmpty())
-                    totalAmount = 0;
-                else
-                    totalAmount = Double.parseDouble(strTotalAmount);
+                if (position != 0) {
+                    if (strTotalAmount == null || strTotalAmount.isEmpty()) {
+                        position = 0;
+                    } else {
+                        totalAmount = Double.parseDouble(strTotalAmount);
+
+                        if (totalAmount == 0)
+                            position = 0;
+                    }
+
+                    if (position == 0) {
+                        Toast.makeText(NewExpense.this, "Please enter total amount before selecting a break down method", Toast.LENGTH_SHORT).show();
+                        dropdownBreakDown.setSelection(position);
+                    }
+                }
 
                 switch (position) {
                     case 1:

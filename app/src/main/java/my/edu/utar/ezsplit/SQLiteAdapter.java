@@ -15,7 +15,6 @@ public class SQLiteAdapter {
 
     // SQL Commands
     // Constant variables
-    // NOTE: Every time you update the table, you need to change the database name, table name and version number
     private static final String MYDATABASE_NAME = "MY_DATABASE";
     public static final int MYDATABASE_VERSION = 1;
 
@@ -137,11 +136,6 @@ public class SQLiteAdapter {
         Cursor cursor = sqLiteDatabase.query(DATABASE_MEMBER_TABLE, columns, null, null, null, null, null);
 
         return cursor.getCount();
-    }
-
-    // Delete a content in the table
-    public int deleteOne(int id) {
-        return sqLiteDatabase.delete(DATABASE_MEMBER_TABLE, MEMBER_KEY_CONTENT + "=?", new String[] {String.valueOf(id)});
     }
 
     // Close the database
