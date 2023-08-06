@@ -13,7 +13,7 @@
 
     <!-- Add the icon for the button -->
     <item
-        android:gravity="center"
+        android:gravity="center|center"
         android:left="8dp"
         android:right="8dp"
         android:top="8dp"
