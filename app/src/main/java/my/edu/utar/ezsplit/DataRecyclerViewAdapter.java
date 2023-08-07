@@ -129,10 +129,12 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 viewHolderLayout4.tvMemberName.setText(data4.getName());
                 viewHolderLayout4.tvRM.setText("RM " + MainActivity.decimalFormat.format(data4.getAmount()));
 
-                if (data4.getRatio() != 0)
+                if (data4.getRatio() != 0) {
                     viewHolderLayout4.editRatio.setText(String.valueOf(data4.getRatio()));
-                else
-                    viewHolderLayout4.editRatio.setHint(String.valueOf(data4.getRatio()));
+                } else {
+                    viewHolderLayout4.editRatio.setText(""); // Clear the text
+                    viewHolderLayout4.editRatio.setHint(String.valueOf(0));
+                }
                 break;
             case 5:
                 Ower data5 = dataList.get(position);
@@ -143,7 +145,7 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 if (data5.getAmount() != 0)
                     viewHolderLayout5.editAmount.setText(String.valueOf(MainActivity.decimalFormat.format(data5.getAmount())));
                 else
-                    viewHolderLayout5.editAmount.setHint(String.valueOf(MainActivity.decimalFormat.format(data5.getAmount())));
+                    viewHolderLayout5.editAmount.setHint(String.valueOf(0));
                 break;
             case 6:
                 Expense expenseData = expenseDataList.get(position);
@@ -221,7 +223,8 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             cvOwe.setBackgroundResource(R.drawable.cardview_outline);
 
-            cvOwe.setOnClickListener(new View.OnClickListener() {
+            // Set the click listener for both CardView and CheckBox
+            View.OnClickListener clickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition(); // Get the position of the clicked item in the RecyclerView
@@ -250,7 +253,10 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notifyDataSetChanged(); // Notify the adapter of the data changes
                     }
                 }
-            });
+            };
+
+            cvOwe.setOnClickListener(clickListener);
+            cb.setOnClickListener(clickListener);
         }
     }
 
